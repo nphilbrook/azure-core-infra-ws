@@ -12,14 +12,14 @@ output "environment_info" {
       environment         = var.environment
       location            = var.location
       resource_group_name = azurerm_resource_group.rg.name
-      zone_name           = azurerm_dns_zone.zone.name
+      zone_name           = "${var.location}.${azurerm_dns_zone.zone_global.name}"
     },
     "eastus2" = {
       environment         = var.environment
       location            = "eastus2"
       resource_group_name = azurerm_resource_group.rg_east.name
-      zone_name           = azurerm_dns_zone.zone_east.name
-    }
+      zone_name           = "eastus2.${azurerm_dns_zone.zone_global.name}"
+    },
     "global" = {
       environment         = var.environment
       resource_group_name = azurerm_resource_group.rg_global.name
