@@ -8,9 +8,17 @@ output "resource_group_location" {
 
 output "environment_info" {
   value = {
-    environment         = var.environment
-    location            = var.location
-    resource_group_name = azurerm_resource_group.rg.name
-    zone_name           = azurerm_dns_zone.zone.name
+    (var.location) = {
+      environment         = var.environment
+      location            = var.location
+      resource_group_name = azurerm_resource_group.rg.name
+      zone_name           = azurerm_dns_zone.zone.name
+    },
+    "eastus2" = {
+      environment         = var.environment
+      location            = "eastus2"
+      resource_group_name = azurerm_resource_group.rg_east.name
+      zone_name           = azurerm_dns_zone.zone_east.name
+    }
   }
 }
