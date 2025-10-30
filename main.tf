@@ -53,3 +53,27 @@ resource "aws_route53_record" "ns_east" {
   ttl     = 300
   records = azurerm_dns_zone.zone_east.name_servers
 }
+
+# "Global" DNS zone
+resource "azurerm_resource_group" "rg_global" {
+  name = "${var.environment}-global"
+  # location is required - default is fine
+  location = var.location
+
+  tags = local.default_tags
+}
+
+resource "azurerm_dns_zone" "zone_global" {
+  name                = "${var.environment}.azure.${local.r53_zone}"
+  resource_group_name = azurerm_resource_group.rg_global.name
+
+  tags = local.default_tags
+}
+
+resource "aws_route53_record" "ns_global" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = azurerm_dns_zone.zone_global.name
+  type    = "NS"
+  ttl     = 300
+  records = azurerm_dns_zone.zone_global.name_servers
+}

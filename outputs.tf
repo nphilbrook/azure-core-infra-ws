@@ -20,5 +20,10 @@ output "environment_info" {
       resource_group_name = azurerm_resource_group.rg_east.name
       zone_name           = azurerm_dns_zone.zone_east.name
     }
+    "global" = {
+      environment         = var.environment
+      resource_group_name = azurerm_resource_group.rg_global.name
+      zone_name           = azurerm_dns_zone.zone_global.name
+    }
   }
 }
